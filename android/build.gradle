@@ -1,0 +1,21 @@
+// Configuring repositories for all projects
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// Setting up the build directory at a custom location
+rootProject.buildDir = "../build"
+
+// Configuring build directories for subprojects
+subprojects {
+    buildDir = "${rootProject.buildDir}/${project.name}"
+    evaluationDependsOn(":app") // Ensures :app is evaluated first
+}
+
+// Registering a clean task to delete the build directory
+tasks.register("clean", Delete) {
+    delete(rootProject.buildDir)
+}
